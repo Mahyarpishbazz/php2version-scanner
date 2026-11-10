@@ -27,7 +27,7 @@ Requires Python 3.10 or higher.
 git clone https://github.com/Mahyarpishbazz/php2version-scanner.git --depth 1
 cd php2version-scanner
 pip install -r requirements.txt
-python scanner.py example.com
+python scanner.py
 ```
 
 The same commands work on Linux, macOS and Windows (use `python3` instead of `python` if your system needs it).
@@ -58,11 +58,11 @@ Full results written to: results.csv
 
 ## Results
 
-| Status | Meaning |
-|--------|---------|
-| `patched` | Version is at or above the fix for its branch |
-| `vulnerable` | Version predates the fix (or the branch is EOL, e.g. 7.4) |
-| `unknown-branch` | Version found, but its branch isn't in the advisory table |
+| Status                        | Meaning                                                                       |
+| ----------------------------- | ----------------------------------------------------------------------------- |
+| `patched`                     | Version is at or above the fix for its branch                                 |
+| `vulnerable`                  | Version predates the fix (or the branch is EOL, e.g. 7.4)                     |
+| `unknown-branch`              | Version found, but its branch isn't in the advisory table                     |
 | `unknown (no version header)` | Server didn't disclose a version (or was unreachable, see the `error` column) |
 
 Many servers hide their version on purpose, so `unknown` is common and expected. The tool would rather say "I don't know" than guess.
