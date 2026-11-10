@@ -26,17 +26,21 @@ Requires Python 3.10 or higher.
 ```
 git clone https://github.com/Mahyarpishbazz/php2version-scanner.git --depth 1
 cd php2version-scanner
-./run.sh example.com
+pip install -r requirements.txt
+python scanner.py example.com
 ```
 
-On Windows: `pip install -r requirements.txt` then `python scanner.py example.com`
+The same commands work on Linux, macOS and Windows (use `python3` instead of `python` if your system needs it).
+
+Prefer a self-contained setup? On Linux/macOS, `./run.sh` does the same thing inside its own virtual environment (run `chmod +x run.sh` once first).
 
 ## Minimal Examples
 
 ```
-./run.sh                              # interactive: type your targets in
-./run.sh targets.txt                  # scan a list (one target per line)
-./run.sh targets.txt -o report.csv    # custom report name (default: results.csv)
+python scanner.py                              # interactive: type your targets in
+python scanner.py example.com 10.0.0.5         # scan one or more targets directly
+python scanner.py targets.txt                  # scan a list (one target per line)
+python scanner.py targets.txt -o report.csv    # custom report name (default: results.csv)
 ```
 
 Targets can be domains, URLs or raw IPs, including internal ones (`192.168.1.10`, `10.0.0.5:8080`). No scheme means HTTPS, with an automatic HTTP retry if HTTPS is refused. See [targets.example.txt](targets.example.txt).

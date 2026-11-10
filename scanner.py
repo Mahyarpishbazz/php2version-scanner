@@ -355,10 +355,10 @@ def main():
         description="Non-intrusive PHP2Shell (CVE-2026-109618/109619) patch-status checker."
     )
     parser.add_argument(
-        "targets_file",
-        nargs="?",
-        default=None,
-        help="Path to a text file with one URL/domain per line. "
+        "targets",
+        nargs="*",
+        help="One or more domains/IPs/URLs (e.g. example.com 10.0.0.5), "
+        "or a single path to a text file with one target per line. "
         "If omitted, you'll be asked to type targets in, and they'll be "
         "saved to targets.txt for next time.",
     )
@@ -367,15 +367,19 @@ def main():
     )
     args = parser.parse_args()
 
-    targets_path = args.targets_file
-    if targets_path is None:
-        targets_path = prompt_and_write_targets("targets.txt")
-
-    try:
-        targets = load_targets(targets_path)
-    except FileNotFoundError:
-        print(f"Error: file not found: {targets_path}", file=sys.stderr)
+    if not args.targets:
+        # nothing given: ask interactively
+        targets = load_targets(prompt_and_write_targets("targets.txt"))
+    elif len(args.targets) == 1 and os.path.isfile(args.targets[0]):
+        # a single existing file: one target per line
+        targets = load_targets(args.targets[0])
+    elif len(args.targets) == 1 and args.targets[0].lower().endswith((".txt", ".lst", ".list")):
+        # looks like a file name but doesn't exist - probably a typo
+        print(f"Error: file not found: {args.targets[0]}", file=sys.stderr)
         sys.exit(1)
+    else:
+        # one or more targets given directly on the command line
+        targets = [t for t in (normalize_target(a) for a in args.targets) if t]
 
     if not targets:
         print("Error: no valid targets found.", file=sys.stderr)

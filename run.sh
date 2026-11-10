@@ -5,7 +5,8 @@
 # in scanner.py, this just handles python/venv/deps and then calls it.
 #
 # usage:
-#   ./run.sh                    (no file? it'll ask you for targets)
+#   ./run.sh                    (no args? it'll ask you for targets)
+#   ./run.sh example.com 10.0.0.5
 #   ./run.sh targets.txt
 #   ./run.sh targets.txt -o custom_report.csv
 
