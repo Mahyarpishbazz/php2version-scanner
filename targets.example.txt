@@ -1,0 +1,5 @@
+# one target per line, # for comments
+# no scheme = https by default
+example.com
+staging.example.com
+10.0.0.5
